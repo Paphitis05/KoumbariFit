@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - KoumbariFit</title>
+</head>
+<body>
+    <h1>Create Your Account</h1>
+
+    <form method="POST">
+        {% csrf_token %}  <!-- CSRF token to protect from Cross Site Request Forgery attacks -->
+
+        <!-- Username field -->
+        <div>
+            <label for="id_username">Username:</label>
+            <!-- Only add a red asterisk if the field is required -->
+            {% if form.username.field.required %}
+                <span style="color: red;">*</span>  <!-- Red asterisk for required field -->
+            {% endif %}
+            {{ form.username }}  <!-- Render the username input field -->
+        </div>
+
+        <!-- Password field -->
+        <div>
+            <label for="id_password">Password:</label>
+            <!-- Red asterisk for required field -->
+            {% if form.password.field.required %}
+                <span style="color: red;">*</span>
+            {% endif %}
+            {{ form.password }}  <!-- Render the password input field -->
+        </div>
+
+        <!-- Confirm Password field -->
+        <div>
+            <label for="id_confirm_password">Confirm Password:</label>
+            <!-- Red asterisk for required field -->
+            {% if form.confirm_password.field.required %}
+                <span style="color: red;">*</span>
+            {% endif %}
+            {{ form.confirm_password }}  <!-- Render the confirm password input field -->
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit">Register</button>
+    </form>
+
+    <hr>
+
+    <!-- Link to login page -->
+    <p>Already have an account?</p>
+    <a href="{% url 'home' %}">
+        <button>Login Here</button>
+    </a>
+</body>
+</html>

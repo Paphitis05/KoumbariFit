@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+</head>
+<body>
+    <h1>Welcome to KoumbariFit</h1>
+    <hr><b>Login Here</b>
+    <form method="POST">
+        {% csrf_token %}
+        <!-- Render login form fields -->
+        {{ form.as_p }}  <!-- Django form rendering -->
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Not registered yet?</p>
+    <button onclick="window.location.href='{% url 'register' %}'">Register Here</button><!--redirection to the register site -->
+</body>
+</html>
