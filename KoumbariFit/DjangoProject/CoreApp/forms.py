@@ -1,6 +1,7 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
+user = get_user_model()
 # User Login Form
 class LoginForm(forms.Form):
     username = forms.CharField(label="Username")
@@ -8,35 +9,22 @@ class LoginForm(forms.Form):
 
 
 # User Registration Form
+
 class RegistrationForm(forms.ModelForm):
-    # Password fields with password input widgets for security
-    password = forms.CharField(
-        widget=forms.PasswordInput(),
-        label="Password"
-    )
-    confirm_password = forms.CharField(
-        widget=forms.PasswordInput(),
-        label="Confirm Password"
-    )
+    password = forms.CharField(widget=forms.PasswordInput, label="Password")
+    confirm_password = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
 
     class Meta:
-        model = User  # Uses Django's built-in User model
-        fields = ['username', 'email', 'password']  # Fields displayed in the form
-        labels = {
-            'username': 'Username',
-            'email': 'Email Address'
-        }
+        model = user
+        fields = ["username", "email", "password"]
 
     def clean(self):
-        """
-        Custom validation to ensure that password and confirm_password match.
-        """
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
 
         if password and confirm_password and password != confirm_password:
-            raise forms.ValidationError("Passwords do not match.")  # Raises an error if passwords don't match
+            self.add_error("confirm_password", "Passwords do not match")
 
         return cleaned_data
 

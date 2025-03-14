@@ -11,34 +11,48 @@
     <form method="POST">
         {% csrf_token %}  <!-- CSRF token to protect from Cross Site Request Forgery attacks -->
 
+        <!-- Display form errors if they exist -->
+        {% if form.non_field_errors %}
+            <div style="color: red;">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <!-- Username field -->
         <div>
             <label for="id_username">Username:</label>
-            <!-- Only add a red asterisk if the field is required -->
             {% if form.username.field.required %}
-                <span style="color: red;">*</span>  <!-- Red asterisk for required field -->
+                <span style="color: red;">*</span>
             {% endif %}
             {{ form.username }}  <!-- Render the username input field -->
+            {% for error in form.username.errors %}
+                <div style="color: red;">{{ error }}</div>
+            {% endfor %}
         </div>
 
         <!-- Password field -->
         <div>
             <label for="id_password">Password:</label>
-            <!-- Red asterisk for required field -->
             {% if form.password.field.required %}
                 <span style="color: red;">*</span>
             {% endif %}
             {{ form.password }}  <!-- Render the password input field -->
+            {% for error in form.password.errors %}
+                <div style="color: red;">{{ error }}</div>
+            {% endfor %}
         </div>
-
         <!-- Confirm Password field -->
         <div>
             <label for="id_confirm_password">Confirm Password:</label>
-            <!-- Red asterisk for required field -->
             {% if form.confirm_password.field.required %}
                 <span style="color: red;">*</span>
             {% endif %}
             {{ form.confirm_password }}  <!-- Render the confirm password input field -->
+            {% for error in form.confirm_password.errors %}
+                <div style="color: red;">{{ error }}</div>
+            {% endfor %}
         </div>
 
         <!-- Submit button -->
@@ -46,7 +60,6 @@
     </form>
 
     <hr>
-
     <!-- Link to login page -->
     <p>Already have an account?</p>
     <a href="{% url 'home' %}">

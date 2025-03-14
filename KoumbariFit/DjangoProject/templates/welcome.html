@@ -9,8 +9,7 @@
     <h1>Welcome to KoumbariFit</h1>
     <hr><b>Login Here</b>
     <form method="POST">
-        {% csrf_token %}
-        <!-- Render login form fields -->
+        {% csrf_token %} <!-- Render login form fields -->
         {{ form.as_p }}  <!-- Django form rendering -->
         <button type="submit">Login</button>
     </form>
