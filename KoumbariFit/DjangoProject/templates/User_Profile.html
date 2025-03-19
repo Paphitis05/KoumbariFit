@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>User Profile</title>
+<body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <h1>User Profile</h1>
+
+{% if form %}
+    <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+{% endif %}
+</head>
+</body>
+<!-- Button to go to the profile edit page -->
+<a href="{% url 'edit_profile' %}">Edit Profile</a>
+

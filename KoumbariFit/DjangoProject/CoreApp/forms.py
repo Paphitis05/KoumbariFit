@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from .models import CustomUser
 
 user = get_user_model()
+
 # User Login Form
 class LoginForm(forms.Form):
     username = forms.CharField(label="Username")
@@ -9,7 +11,6 @@ class LoginForm(forms.Form):
 
 
 # User Registration Form
-
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label="Password")
     confirm_password = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
@@ -37,5 +38,12 @@ class RegistrationForm(forms.ModelForm):
 
         if commit:
             user.save()  # Saves user data to the database if commit=True
-
         return user
+
+# Profile Update Form (separate from RegistrationForm)
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['bio', 'profile_picture']
+
+

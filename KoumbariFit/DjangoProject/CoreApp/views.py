@@ -1,53 +1,72 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, ProfileUpdateForm
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()  # Reference to the custom user model
 
 # Home page view for login
 def home(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = LoginForm(request.POST)  # If it's a POST request, validate login form
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user_obj = authenticate(request, username=username, password=password)  # Avoid conflict with global `User`
-            if user_obj is not None:
-                login(request, user_obj)
-                return redirect('home')  # Redirect after login
+            user_obj = authenticate(request, username=username, password=password)  # Authenticate user
+            if user_obj is not None:  # If authentication is successful
+                login(request, user_obj)  # Log the user in
+                return redirect('User_Profile')  # Redirect to the Users Profile page after successful login
             else:
-                form.add_error(None, "Invalid login credentials.")
+                form.add_error(None, "Invalid login credentials.")  # If credentials are incorrect
     else:
-        form = LoginForm()
+        form = LoginForm()  # If it's a GET request, show the login form
 
-    return render(request, 'welcome.html', {'form': form})  # Pass form to the template
+    return render(request, 'welcome.html', {'form': form})  # Render the login form
 
 # Registration view
-from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model
-from .forms import RegistrationForm
-
-User = get_user_model()  # Reference to the custom user model
-
-
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST)  # Create the registration form
         if form.is_valid():
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-
-            # Check if username or email already exists
-            if User.objects.filter(username=username).exists():
-                form.add_error('username', "This username is already taken.")
-            else:
-                user = form.save(commit=False)  # Create user but don't save yet
-                user.set_password(form.cleaned_data["password"])  # Hash password
-                user.save()  # Now save user with hashed password
-                return redirect('home')  # Redirect to login/home page
-
+            form.save()  # Save the new user if the form is valid
+            return redirect('home')  # Redirect to the home page (login) after successful registration
     else:
-        form = RegistrationForm()
+        form = RegistrationForm()  # If GET request, show the registration form
 
-    return render(request, 'register.html', {'form': form})  # Pass form to template
+    return render(request, 'register.html', {'form': form})  # Render the registration form
+
+# User Profile view
+def User_Profile(request):
+    if request.user.is_authenticated:  # Check if the user is logged in
+        if request.method == 'POST':
+            form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)  # Handle form submission for profile update
+            if form.is_valid():
+                form.save()  # Save the updated profile
+                return redirect('User_Profile')  # Redirect to the same page to see updated profile
+        else:
+            form = ProfileUpdateForm(instance=request.user)  # Pre-fill the form with the current user's data
+
+        return render(request, 'User_Profile.html', {'form': form})  # Render the profile page with the form
+    else:
+        return redirect('home')  # Redirect to login page if user is not logged in
+
+def Feed(request):
+    return render(request, 'Feed.html')  # Pass Feed from templates
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            if request.htmx:  # HTMX request
+                # Return a partial template with updated profile info
+                return render(request, 'partials/profile_update.html', {'user': request.user})
+            else:
+                return redirect('User_Profile')  # Normal redirect after update
+    else:
+        form = ProfileUpdateForm(instance=request.user)
+
+    return render(request, 'User_Profile.html', {'form': form})  # Render the profile page with the form
