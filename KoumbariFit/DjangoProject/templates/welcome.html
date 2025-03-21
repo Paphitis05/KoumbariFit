@@ -8,6 +8,8 @@
 <body>
     <h1>Welcome to KoumbariFit</h1>
     <hr><b>Login Here</b>
+<!-- The form submits login credentials to the backend for authentication.
+If login is successful, the user is redirected to their profile page ('User_Profile'). -->
     <form method="POST">
         {% csrf_token %} <!-- Render login form fields -->
         {{ form.as_p }}  <!-- Django form rendering -->

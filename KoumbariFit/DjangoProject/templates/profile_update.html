@@ -1,0 +1,16 @@
+<!--This template will be used to return the updated user profile, including the bio and profile picture,
+after the form submission via HTMX -->
+<div id="profile-info">
+    <p><strong>Bio:</strong> <span id="bio-text">{{ user.bio }}</span></p>
+
+    <div id="profile-pic">
+        {% if user.profile_picture %}
+            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150" height="150" style="border-radius: 50%; object-fit: cover;">
+        {% else %}
+            <p>No profile picture uploaded.</p>
+        {% endif %}
+    </div>
+
+    <!-- Edit Bio and Profile Picture Button -->
+    <button id="edit-btn" onclick="editProfile()">Edit Profile</button>
+</div>
