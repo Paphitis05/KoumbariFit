@@ -9,7 +9,6 @@ class LoginForm(forms.Form):
     username = forms.CharField(label="Username")
     password = forms.CharField(widget=forms.PasswordInput(), label="Password")
 
-
 # User Registration Form
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label="Password")
@@ -17,7 +16,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = user
-        fields = ["username", "email", "password"]
+        fields = ["username", "password"]
 
     def clean(self):
         cleaned_data = super().clean()

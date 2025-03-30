@@ -12,14 +12,13 @@
         <!-- Display bio and profile picture -->
         <p><strong>Bio:</strong> <span id="bio-text">{{ user.bio }}</span></p>
 
-        <div id="profile-pic">
-            {% if user.profile_picture %}
-                <!-- Display profile picture in circle -->
-                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150" height="150" style="border-radius: 100%; object-fit: fill;">
-            {% else %}
-                <p>No profile picture uploaded.</p>
-            {% endif %}
-        </div>
+        {% if user.profile_picture %}
+            <!-- Display profile picture in a circle -->
+            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150" height="150" style="border-radius: 100%; object-fit: cover;">
+        {% else %}
+            <p>No profile picture uploaded.</p>
+        {% endif %}
+
 
         <!-- Edit Bio and Profile Picture Button -->
         <button id="edit-btn" onclick="editProfile()">Edit Profile</button>

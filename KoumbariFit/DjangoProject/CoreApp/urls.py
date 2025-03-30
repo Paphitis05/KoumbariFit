@@ -1,6 +1,10 @@
 from django.contrib import admin
 from django.urls import path
 from CoreApp import views  # Import views from your app
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),  # Admin URL
@@ -10,3 +14,4 @@ urlpatterns = [
     path('User_Profile/', views.User_Profile, name='User_Profile'),  # User profile page
     path('edit_profile/', views.edit_profile, name='edit_profile'),  # Edit profile page
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
