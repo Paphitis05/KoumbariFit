@@ -1,4 +1,4 @@
-<!--This template will be used to return the updated user profile, including the bio and profile picture,
+<!-- This template will be used to return the updated user profile, including the bio and profile picture,
 after the form submission via HTMX -->
 <div id="profile-info">
     <p><strong>Bio:</strong> <span id="bio-text">{{ user.bio }}</span></p>
@@ -11,6 +11,14 @@ after the form submission via HTMX -->
         {% endif %}
     </div>
 
-    <!-- Edit Bio and Profile Picture Button -->
+    <!-- Button to edit profile -->
     <button id="edit-btn" onclick="editProfile()">Edit Profile</button>
+
+    {% if user.profile_picture %}
+        <!-- Button to remove profile picture -->
+        <form method="POST" action="{% url 'edit_profile' %}">
+            {% csrf_token %}
+            <button type="submit" name="delete_picture" value="true">Remove Profile Picture</button>
+        </form>
+    {% endif %}
 </div>
