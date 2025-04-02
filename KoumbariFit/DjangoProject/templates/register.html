@@ -10,7 +10,6 @@
 
     <form method="POST">
         {% csrf_token %}  <!-- CSRF token to protect from Cross Site Request Forgery attacks -->
-
         <!-- Display form errors if they exist -->
         {% if form.non_field_errors %}
             <div style="color: red;">
@@ -19,7 +18,6 @@
                 {% endfor %}
             </div>
         {% endif %}
-
         <!-- Username field -->
         <div>
             <label for="id_username">Username:</label>
@@ -31,7 +29,6 @@
                 <div style="color: red;">{{ error }}</div>
             {% endfor %}
         </div>
-
         <!-- Password field -->
         <div>
             <label for="id_password">Password:</label>
@@ -54,11 +51,9 @@
                 <div style="color: red;">{{ error }}</div>
             {% endfor %}
         </div>
-
         <!-- Submit button -->
         <button type="submit">Register</button>
     </form>
-
     <hr>
     <!-- Link to login page -->
     <p>Already have an account?</p>

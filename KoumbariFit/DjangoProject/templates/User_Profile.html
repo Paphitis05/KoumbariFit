@@ -6,19 +6,19 @@
     <title>User Profile</title>
 </head>
 <body>
-    <h1>User Profile</h1>
+    <h1>{{ user.username }}</h1> <!-- Display username -->
 
     <div id="profile-info">
-        <!-- Display bio and profile picture -->
-        <p><strong>Bio:</strong> <span id="bio-text">{{ user.bio }}</span></p>
-
         {% if user.profile_picture %}
-            <!-- Display profile picture in a circle -->
-            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150" height="150" style="border-radius: 100%; object-fit: cover;">
+            <!-- Display profile picture below username but above bio -->
+            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150" height="150"
+                 style="border-radius: 100%; object-fit: cover;">
         {% else %}
             <p>No profile picture uploaded.</p>
         {% endif %}
 
+        <!-- Display Bio -->
+        <p><strong>Bio:</strong> <span id="bio-text">{{ user.bio }}</span></p>
 
         <!-- Edit Bio and Profile Picture Button -->
         <button id="edit-btn" onclick="editProfile()">Edit Profile</button>
@@ -32,6 +32,7 @@
             <button type="submit">Save Changes</button>
         </form>
     </div>
+
     <!-- HTMX Partial Update Section -->
     <div id="htmx-update"></div>
 

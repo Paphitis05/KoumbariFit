@@ -13,5 +13,4 @@ urlpatterns = [
     path('Feed/', views.Feed, name='Feed'),  # Feed page
     path('User_Profile/', views.User_Profile, name='User_Profile'),  # User profile page
     path('edit_profile/', views.edit_profile, name='edit_profile'),  # Edit profile page
-]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

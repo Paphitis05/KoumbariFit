@@ -1,3 +1,4 @@
+import os  # Make sure to import the os module for file deletion
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import RegistrationForm, LoginForm, ProfileUpdateForm
@@ -54,19 +55,32 @@ def User_Profile(request):
 def Feed(request):
     return render(request, 'Feed.html')  # Pass Feed from templates
 
-
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
+        # Check if the 'delete_picture' flag is in the POST data
+        if request.POST.get('delete_picture') == 'true':
+            # Get the user's profile picture path
+            if request.user.profile_picture:
+                # Get the file path
+                file_path = request.user.profile_picture.path
+                # Delete the file from the filesystem
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                # Set the profile_picture field to None
+                request.user.profile_picture = None
+                request.user.save()
+
+        # Handle form submission for profile updates
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            if request.htmx:  # HTMX request
-                # Return a partial template with updated profile info
+            if request.htmx:
                 return render(request, 'partials/profile_update.html', {'user': request.user})
             else:
-                return redirect('User_Profile')  # Normal redirect after update
+                return redirect('User_Profile')
+
     else:
         form = ProfileUpdateForm(instance=request.user)
 
-    return render(request, 'User_Profile.html', {'form': form})  # Render the profile page with the form
+    return render(request, 'User_Profile.html', {'form': form})
