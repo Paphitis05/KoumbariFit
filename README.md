@@ -19,18 +19,3 @@ Before running the project, make sure to install the required libraries:
 pip install django
 pip install pillow    # For handling image uploads
 pip install django-htmx    # For partial refresh with HTMX
-
-
-
-
-
-# KoumbariFit
-Fitness oriented web application, made using python(Django), html/htmx and sqlite as the local database.
-
-in order to run the project first you will need to install the imported lyraries:
-pip install django 
-pip install pillow // for image upload handling 
-pip install django-htmx // for partial refresh htmx requests 
-
-The project runs with the comand: python manage.py runserver
-The surver runs localy on this adress: http://127.0.0.1:8000/
