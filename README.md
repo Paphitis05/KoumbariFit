@@ -19,3 +19,5 @@ Before running the project, make sure to install the required libraries:
 pip install django
 pip install pillow    # For handling image uploads
 pip install django-htmx    # For partial refresh with HTMX
+
+running the surver : python manage.py runserver
