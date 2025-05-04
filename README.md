@@ -21,3 +21,5 @@ pip install pillow    # For handling image uploads
 pip install django-htmx    # For partial refresh with HTMX
 
 running the surver : python manage.py runserver
+The server will be running locally at:
+http://127.0.0.1:8000/
