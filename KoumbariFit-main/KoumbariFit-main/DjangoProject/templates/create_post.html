@@ -1,0 +1,8 @@
+<form method="POST" enctype="multipart/form-data"
+      hx-post="{% url 'create_post' %}"
+      hx-target="#post-list"
+      hx-swap="beforebegin">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Post</button>
+</form>
