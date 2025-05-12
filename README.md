@@ -19,7 +19,14 @@ Before running the project, make sure to install the required libraries:
 pip install django
 pip install pillow    # For handling image uploads
 pip install django-htmx    # For partial refresh with HTMX
-
-running the surver : python manage.py runserver
+```
+Running the surver : 
+```bash
+python manage.py runserver
 The server will be running locally at:
 http://127.0.0.1:8000/
+```
+If needed run these commands to make sure all the migrations have been completed succesfuly:
+```bash
+python manage.py makemigrations
+python manage.py migrate
