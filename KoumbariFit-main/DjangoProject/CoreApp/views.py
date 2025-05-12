@@ -1,10 +1,11 @@
 import os  # os module for file deletion
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import RegistrationForm, LoginForm, ProfileUpdateForm
+from .forms import RegistrationForm, LoginForm, ProfileUpdateForm, PostCreateForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+
 User = get_user_model()  # Reference to the custom user model
 
 # Home page view for login
@@ -88,3 +89,16 @@ def edit_profile(request):
 def user_logout(request):
     logout(request) # Ends the user session
     return redirect('home')  # Redirect to login or home page
+
+@login_required
+def create_post(request):
+    if request.method == "POST":
+        form = PostCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return HttpResponse("Post created successfully!")  # Or return an updated post list partial
+    else:
+        form = PostCreateForm()
+    return render(request, "create_post.html", {"form": form})
