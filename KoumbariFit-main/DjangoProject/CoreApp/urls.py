@@ -13,4 +13,5 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile, name='edit_profile'),  # Edit profile page(partial HTMX)
     path('logout/', views.user_logout, name='logout'), # Log out Function Redirecting to the login page
     path('create/', views.create_post, name='create_post'),
+    path('post/<int:post_id>/delete/', views.delete_post, name='delete_post'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

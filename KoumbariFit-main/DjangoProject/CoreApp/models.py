@@ -8,9 +8,8 @@ class CustomUser(AbstractUser):
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
     image = models.ImageField(upload_to='post_images/', blank=True, null=True)
 
     def __str__(self):

@@ -6,7 +6,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.http import HttpResponse
-
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
 User = get_user_model()  # Reference to the custom user model
 
 # Home page view for login
@@ -55,8 +56,7 @@ def User_Profile(request):
     else:
         return redirect('home')  # Redirect to login page if user is not logged in
 
-def Feed(request):
-    return render(request, 'Feed.html')  # Pass Feed from templates
+
 
 @login_required
 def edit_profile(request):
@@ -105,3 +105,17 @@ def create_post(request):
     else:
         form = PostCreateForm()
     return render(request, "create_post.html", {"form": form})
+
+# Delete a post by ID (only if it belongs to the logged-in user)
+@login_required
+def delete_post(request, post_id):
+    # Only fetch the post if it belongs to the logged-in user
+    post = get_object_or_404(request.user.post_set, id=post_id)
+    if request.method == "POST":
+        post.delete()
+        messages.success(request, "Post deleted.")
+        return redirect('User_Profile')
+    return HttpResponse("Invalid request", status=400)
+
+def Feed(request):
+    return render(request, 'Feed.html')  # Pass Feed from templates
