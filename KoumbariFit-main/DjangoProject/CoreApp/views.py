@@ -5,6 +5,7 @@ from .forms import RegistrationForm, LoginForm, ProfileUpdateForm, PostCreateFor
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.http import HttpResponse
 
 User = get_user_model()  # Reference to the custom user model
 
@@ -49,7 +50,8 @@ def User_Profile(request):
         else:
             form = ProfileUpdateForm(instance=request.user)  # Pre-fill the form with the current user's data
 
-        return render(request, 'User_Profile.html', {'form': form})  # Render the profile page with the form
+        posts = request.user.post_set.all()  # Get all posts made by the logged-in user
+        return render(request, 'User_Profile.html', {'form': form, 'posts': posts})  # Render the profile page with the form and posts
     else:
         return redirect('home')  # Redirect to login page if user is not logged in
 
@@ -98,7 +100,8 @@ def create_post(request):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            return HttpResponse("Post created successfully!")  # Or return an updated post list partial
+            # After saving the post
+            return redirect('User_Profile')
     else:
         form = PostCreateForm()
     return render(request, "create_post.html", {"form": form})
