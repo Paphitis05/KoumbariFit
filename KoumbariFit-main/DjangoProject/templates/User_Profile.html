@@ -49,22 +49,14 @@
         }
     </script>
 
-<!-- Create Post Button -->
-<button onclick="showCreatePostForm()">Create Post</button>
-<!-- Hidden Create Post Form -->
-<div id="create-post-form" style="display: none;">
+<!--Create Post Form *Not Partially loaded (we want to have a separate "template" for it)* -->
+<div id="create-post-form">
     <form method="POST" action="{% url 'create_post' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ post_form.as_p }}
-        <button type="submit">Submit Post</button>
+        <button type="submit">Create Post</button>
     </form>
 </div>
-<script>
-    function showCreatePostForm() {
-        document.getElementById('create-post-form').style.display = 'block';
-    }
-</script>
-
 </body>
 
 </html>
