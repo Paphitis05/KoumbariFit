@@ -7,7 +7,11 @@
 <!-- HTMX Logout Button with CSRF Token -->
 <form method="POST" action="{% url 'logout' %}" hx-post="{% url 'logout' %}" hx-target="body" hx-swap="outerHTML">
     {% csrf_token %}
-    <button type="submit">Logout</button>
+    <button type="submit">Logout</button><hr>
+</form>
+    <!-- Go to Feed Button -->
+<form action="{% url 'Feed' %}" method="get" style="margin-top: 20px;">
+    <button type="submit">Go to Feed</button>
 </form>
 </head>
 <body>

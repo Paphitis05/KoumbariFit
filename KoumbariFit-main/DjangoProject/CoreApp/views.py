@@ -8,6 +8,7 @@ from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.db.models import Q  # Allows complex queries like case-insensitive search
 User = get_user_model()  # Reference to the custom user model
 
 # Home page view for login
@@ -117,5 +118,19 @@ def delete_post(request, post_id):
         return redirect('User_Profile')
     return HttpResponse("Invalid request", status=400)
 
+# View for the user feed/search page
 def Feed(request):
-    return render(request, 'Feed.html')  # Pass Feed from templates
+    query = request.GET.get('q', '')  # Get the search query from the URL parameters (e.g., ?q=someuser)
+
+    # If there's a query, filter users whose usernames contain the query (case-insensitive)
+    # Otherwise, return an empty list (don't show users by default)
+    users = User.objects.filter(Q(username__icontains=query)) if query else []
+
+    # Render the feed page, passing the search results and the current query (to display in input)
+    return render(request, 'Feed.html', {'users': users, 'query': query})
+
+# View for displaying another user's public profile
+def other_user_profile(request, username):
+    user = get_object_or_404(User, username=username)  # Look up user by username
+    posts = user.post_set.all()  # Get user's posts (adjust if you renamed related_name)
+    return render(request, 'OtherUserProfile.html', {'user_profile': user, 'posts': posts})

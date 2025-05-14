@@ -1,12 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feed</title>
-    <h1>Feed </h1>
 </head>
 <body>
-    <h1>Welcome to the Feed Page!</h1>
+
+    <!-- Page Heading -->
+    <h1>Search for Users</h1>
+
+    <!-- Search Form (sends GET request to the same page with ?q=...) -->
+    <form method="get" action="{% url 'Feed' %}">
+        <!-- Input for the username query -->
+        <input type="text" name="q" placeholder="Search usernames..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    <!-- Only show search results if a query was provided -->
+    {% if query %}
+        <h2>Search Results for "{{ query }}"</h2>
+
+        <!-- Check if any users were found -->
+        {% if users %}
+            <ul>
+                <!-- List all matching users -->
+                {% for user in users %}
+                    <li>{{ user.username }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No users found.</p>
+        {% endif %}
+    {% endif %}
+
+    <!-- Link to go back to the user's profile page -->
+    <a href="{% url 'User_Profile' %}">Back to Profile</a>
+
 </body>
 </html>
