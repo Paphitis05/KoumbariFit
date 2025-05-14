@@ -49,14 +49,11 @@
         }
     </script>
 
-<!--Create Post Form *Not Partially loaded (we want to have a separate "template" for it)* -->
-<div id="create-post-form">
-    <form method="POST" action="{% url 'create_post' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ post_form.as_p }}
-        <button type="submit">Create Post</button>
-    </form>
-</div>
+<!-- Redirect to Create Post page -->
+<a href="{% url 'create_post' %}">
+    <button type="button">Create Post</button>
+</a>
+
 <h2>Your Posts</h2>
 {% if posts %}
     {% for post in posts %}
