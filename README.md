@@ -2,7 +2,7 @@
 
 A fitness-oriented web application built with Python (Django), HTML/HTMX, and SQLite for local database storage.
 
-##Our Video Showing the program run
+## Our Video Showing the program run
 [https://youtu.be/Od45rulGcT8].(https://youtu.be/Od45rulGcT8)
 ## Features:
 - User registration and authentication
