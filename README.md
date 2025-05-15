@@ -4,7 +4,7 @@ A fitness-oriented web application built with Python (Django), HTML/HTMX, and SQ
 
 ## Our Video Showing the program run
 
-[[[https://youtu.be/Od45rulGcT8](https://www.youtube.com/@KoumbariFit)].([https://youtu.be/Od45rulGcT8](https://www.youtube.com/@KoumbariFit))](https://www.youtube.com/@KoumbariFit)
+[[[https://youtu.be/Od45rulGcT8](https://www.youtube.com/@KoumbariFit)]
 ## Features:
 - User registration and authentication
 - Image upload with description as post
