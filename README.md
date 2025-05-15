@@ -2,9 +2,9 @@
 
 A fitness-oriented web application built with Python (Django), HTML/HTMX, and SQLite for local database storage.
 
-## Our Video Showing the program run
+## Our Youtube channel
 
-[[[https://youtu.be/Od45rulGcT8](https://www.youtube.com/@KoumbariFit)]
+[https://youtu.be/Od45rulGcT8](https://www.youtube.com/@KoumbariFit)
 ## Features:
 - User registration and authentication
 - Image upload with description as post
