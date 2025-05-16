@@ -4,7 +4,8 @@ A fitness-oriented web application built with Python (Django), HTML/HTMX, and SQ
 
 ## Features:
 - User registration and authentication
-- Image upload functionality
+- Image upload & deletion functionality (posts/profile pic)
+- Description linked to image (bio/caption)
 - Partial refresh with HTMX for dynamic content updates
 - SQLite as the local database
 - Search for registered users by substrings
