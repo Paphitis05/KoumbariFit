@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+</head>
+<body>
+    <h1>Create a New Post</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Description Field -->
+        <div>
+            <label for="description">Post Description:</label>
+            <textarea name="description" id="description" rows="4" cols="50" required></textarea>
+        </div>
+
+        <!-- Image Field -->
+        <div>
+            <label for="image">Upload Image:</label>
+            <input type="file" name="image" id="image" accept="image/*" required>
+        </div>
+
+        <button type="submit">Submit Post</button>
+    </form>
+    <a href="{% url 'User_Profile' %}">Back to Profile</a>
+</body>
+</html>
