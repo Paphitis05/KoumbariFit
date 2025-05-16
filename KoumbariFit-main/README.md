@@ -7,6 +7,7 @@ A fitness-oriented web application built with Python (Django), HTML/HTMX, and SQ
 - Image upload functionality
 - Partial refresh with HTMX for dynamic content updates
 - SQLite as the local database
+- Search for registered users by substrings
 
 ## Repository:
 [https://github.com/Paphitis05/KoumbariFit](https://github.com/Paphitis05/KoumbariFit)
